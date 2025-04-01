@@ -12,9 +12,16 @@ RUN mv ./composer.phar /usr/bin/composer
 WORKDIR /var/www/html
 VOLUME /var/www/html
 
-COPY docker-entrypoint.sh /usr/local/bin/
-ENTRYPOINT ["docker-entrypoint.sh"]
-USER www-data
-CMD ["wp", "shell"]
+USER root
+# USER www-data
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+COPY entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
+
+
+#CMD ["wp", "shell"]
+#ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 
 
